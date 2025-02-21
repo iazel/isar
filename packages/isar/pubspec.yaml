@@ -13,7 +13,7 @@ environment:
 
 dependencies:
   ffi: ">=2.0.0 <3.0.0"
-  js: ^0.6.4
+  js: ^0.7.2
   meta: ^1.7.0
 
 dev_dependencies:
