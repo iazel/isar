@@ -2,15 +2,14 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:isar/isar.dart';
-
 import 'package:xxh3/xxh3.dart';
 
 class ObjectInfo {
   ObjectInfo({
     required this.dartName,
     required this.isarName,
-    this.accessor,
     required List<ObjectProperty> properties,
+    this.accessor,
     this.embeddedDartNames = const {},
     this.indexes = const [],
     this.links = const [],
@@ -36,12 +35,17 @@ class ObjectInfo {
       properties.where((it) => !it.isId).toList();
 
   String get getIdName => '_${dartName.decapitalize()}GetId';
+
   String get getLinksName => '_${dartName.decapitalize()}GetLinks';
+
   String get attachName => '_${dartName.decapitalize()}Attach';
 
   String get estimateSizeName => '_${dartName.decapitalize()}EstimateSize';
+
   String get serializeName => '_${dartName.decapitalize()}Serialize';
+
   String get deserializeName => '_${dartName.decapitalize()}Deserialize';
+
   String get deserializePropName =>
       '_${dartName.decapitalize()}DeserializeProp';
 }
@@ -58,7 +62,6 @@ class ObjectProperty {
     required this.dartName,
     required this.isarName,
     required this.typeClassName,
-    this.targetIsarName,
     required this.isarType,
     required this.isId,
     required this.enumMap,
@@ -66,9 +69,10 @@ class ObjectProperty {
     required this.defaultEnumElement,
     required this.nullable,
     required this.elementNullable,
-    this.userDefaultValue,
     required this.deserialize,
     required this.assignable,
+    this.targetIsarName,
+    this.userDefaultValue,
     this.constructorPosition,
   });
 
@@ -183,10 +187,10 @@ class ObjectLink {
   const ObjectLink({
     required this.dartName,
     required this.isarName,
-    this.targetLinkIsarName,
     required this.targetCollectionDartName,
     required this.targetCollectionIsarName,
     required this.isSingle,
+    this.targetLinkIsarName,
   });
 
   final String dartName;

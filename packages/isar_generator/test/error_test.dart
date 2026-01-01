@@ -16,15 +16,18 @@ void main() {
         final errorMessage = content.first.split('//').last.trim();
 
         var error = '';
-        try {
-          await testBuilder(
-            getIsarGenerator(BuilderOptions.empty),
-            {'a|${file.path}': content.join('\n')},
-            reader: await PackageAssetReader.currentIsolate(),
-          );
-        } catch (e) {
-          error = e.toString();
-        }
+        final readerWriter = TestReaderWriter(rootPackage: 'a');
+        await readerWriter.testing.loadIsolateSources();
+        await testBuilder(
+          getIsarGenerator(BuilderOptions.empty),
+          {'a|${file.path}': content.join('\n')},
+          readerWriter: readerWriter,
+          onLog: (record) {
+            if (record.message.isNotEmpty) {
+              error += record.message;
+            }
+          },
+        );
 
         expect(error.toLowerCase(), contains(errorMessage.toLowerCase()));
       });
